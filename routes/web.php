@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\PasswordsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,13 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('generator');
-});
+})->name('generator');
 
 Route::get('/form', function () {
     return view('generator');
-});
+})->name('form');
 
-
-Route::post('submit', 'PasswordsController@generate');
+Route::post('submit', PasswordsController::class)->name('submit');
 
 

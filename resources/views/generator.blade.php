@@ -56,7 +56,7 @@
              <div class="mb-3">
                <label for="length" class="form-label">
                 Password Length:
-                <input type="number" name="length" id="length" placeholder="Type a Number">
+                <input type="number" name="length" required min="1" id="length" placeholder="Type a Number">
                </label>
              </div>
 
