@@ -6,24 +6,22 @@ use Illuminate\Http\Request;
 
 class PasswordsController extends Controller
 {
-   public  $lowerCase = "abcdefghijklmnopqrstuvxyz";
-   public  $upperCase  =  "ABCDEFGHIJKLMNOPQRSTUVXYZ";
-   public  $numbers = "0123456789";
-   public  $specialChar = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}";
+    private string $lowerCase = "abcdefghijklmnopqrstuvxyz";
+    private string $upperCase = "ABCDEFGHIJKLMNOPQRSTUVXYZ";
+    private string $numbers = "0123456789";
+    private string $specialChar = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}";
 
-    public function generate(Request $request)
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request)
     {
         $concatValue = "";
-        $passLentgh = 0;
-
-        if (!empty($request->input())) {    
-
+        $passLength = 0;
+        if (!empty($request->input())) {
             if (!empty($request->input('passArr'))) {
-
                 $arrayOfRequirements = $request->input('passArr');
-
                 foreach ($arrayOfRequirements as $value) {
-
                     if ($value == 1) {
                         $concatValue .= $this->specialChar;
                     } elseif ($value == 2) {
@@ -32,23 +30,15 @@ class PasswordsController extends Controller
                         $concatValue .= $this->lowerCase;
                     } elseif ($value == 4) {
                         $concatValue .= $this->upperCase;
-
                     }
                 }
-
             }
-
             if (!empty($request->input('length'))) {
-
-                $passLentgh = $request->input('length');
+                $passLength = $request->input('length');
             }
-
-            $randomPassword = "";
-
-            $randomPassword = substr(str_shuffle($concatValue), 0, $passLentgh);
-
+            $randomPassword = substr(str_shuffle($concatValue), 0, $passLength);
             return view('newpass', compact("randomPassword"));
         }
-
+        return redirect(route('generator'));
     }
 }
